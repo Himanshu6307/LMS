@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import { Toaster } from 'react-hot-toast'
+import ForgotPassword from './pages/ForgotPassword'
 
 function AppRouter() {
     return (
@@ -35,10 +36,12 @@ function AppRouter() {
                     },
                 }}
             />
+
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/login' element={<Login />} />
+                <Route path="/forgotpassword" element={<ForgotPassword />} />
             </Routes>
         </BrowserRouter>
     )

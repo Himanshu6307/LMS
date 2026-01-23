@@ -39,7 +39,24 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
       },
+
     ],
+
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+
+    otpCode: {
+      type: String,
+      default: null
+    },
+
+    expireAt: {
+      type: Date,
+      default: null
+    }
+
   },
   { timestamps: true }
 );

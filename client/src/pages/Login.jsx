@@ -92,9 +92,10 @@ function Login() {
                             <img className='w-[25px]' src={google} alt="" />
                         </div>
 
-                        <div className=' flex justify-center items-center w-[100%]'>
+                        <div className=' flex justify-center items-center gap-3 w-[100%]'>
                             <p onClick={() => { navigate("/signup") }} className='flex justify-center cursor-pointer items-center text-blue-600 underline text-center'>Create an account</p>
-
+                             
+                             <h1 onClick={()=>{navigate("/forgotpassword")}} className='underline text-blue-800'>forgotPassword</h1>
                         </div>
 
 

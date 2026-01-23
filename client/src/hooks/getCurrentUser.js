@@ -13,9 +13,11 @@ const useGetCurrentUser = () => {
                 dispatch(setLoading(true))
                 const response = await axios.get(`${ServerUrl}/user/getcurrentuser`, { withCredentials: true });
                 console.log(response.data);
+                dispatch(setUserDetail(response.data))
                 dispatch(setLoading(false))
             } catch (error) {
               console.log("Error in GetCurrentUser hooks",error)
+              dispatch(setLoading(false))
             }
 
         })()
