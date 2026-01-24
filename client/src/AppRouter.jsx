@@ -9,6 +9,8 @@ import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import Dashboard from './pages/Educator/Dashboard'
 import { useSelector } from 'react-redux'
+import Courses from './pages/Educator/Courses'
+import CreateCourse from './pages/Educator/CreateCourse'
 
 function AppRouter() {
         const { userDetail } = useSelector(state => state.user)
@@ -51,6 +53,8 @@ function AppRouter() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/editprofile" element={<EditProfile />} />
                 <Route path="/dashboard" element={userDetail?.role==="educator"?<Dashboard />:<Navigate to={"/signup"}/>} />
+                <Route path="/courses" element={userDetail?.role==="educator"?<Courses />:<Navigate to={"/signup"}/>} />
+                <Route path="/createcourse" element={userDetail?.role==="educator"?<CreateCourse />:<Navigate to={"/signup"}/>} />
             </Routes>
         </BrowserRouter>
     )
