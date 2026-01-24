@@ -6,6 +6,7 @@ import { FaGooglePlay } from "react-icons/fa";
 import ai from "../assets/ai.png"
 import ai1 from "../assets/SearchAi.png"
 import Logo from '../components/Logo';
+import ExploreCourses from '../components/ExploreCourses';
 
 function Home() {
 
@@ -37,6 +38,7 @@ function Home() {
         </div>
       }
       <Logo/>
+      <ExploreCourses/>
     </div>
   )
 }
