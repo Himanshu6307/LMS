@@ -1,12 +1,37 @@
 import React, { useState } from 'react'
 import { IoMdArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
+import { serverUrl } from '.../App.jsx';
 
 function CreateCourse() {
 
     const navigate = useNavigate();
     const [title,setTitle]=useState("");
     const [category,setCategory]=useState("Select Category");
+    const [loading,setLoading]=useState(false);
+
+    const handleSubmit=async()=>{
+        if(!title || !category){
+            toast.success("Please fill all the fields");
+            return;
+        }
+        try {
+            setLoading(true);
+            const response = await axios.post(`${serverUrl}/course/createcourse`,{
+                title,
+                category
+            },{
+                withCredentials:true
+            });
+            
+            setLoading(false);
+            
+        } catch (error) {
+            
+        }
+    }
 
     return (
         <div className='w-[100vw] h-[100vh] flex items-center justify-center'>
