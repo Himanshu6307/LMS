@@ -9,5 +9,5 @@ courseRouter.post('/createcourse',isAuthenticated,createCourse);
 courseRouter.post('/editcourse/:courseId',isAuthenticated,upload.single("thumbnail"),editCourse);
 courseRouter.get('/getcreatedcourse',isAuthenticated,getCreatedCourse);
 courseRouter.get('/getcoursebyid/:courseId',isAuthenticated,getCourseById);
-courseRouter.delete('/deletecourse/:courseId',isAuthenticated,deleteCourse);
+courseRouter.get('/deletecourse/:courseId',isAuthenticated,deleteCourse);
 export default courseRouter;

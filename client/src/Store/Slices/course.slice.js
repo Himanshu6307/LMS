@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+    loading:false,
   courseDetail:[]
 }
 
@@ -10,6 +11,9 @@ export const courseSlice = createSlice({
   reducers: {
     setCourseDetail: (state,action) => {
       state.courseDetail=action.payload;
+    },
+    setLoading: (state,action) => {
+      state.loading=action.payload;
     }
   
     
@@ -18,6 +22,6 @@ export const courseSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {setCourseDetail} = courseSlice.actions
+export const {setCourseDetail,setLoading} = courseSlice.actions
 
 export default courseSlice.reducer

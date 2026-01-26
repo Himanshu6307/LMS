@@ -35,15 +35,18 @@ const courseSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    
     creator: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+
     isPublished: {
       type: Boolean,
       default: false,
     },
+
     reviews: [
       {
         type: mongoose.Schema.Types.ObjectId,

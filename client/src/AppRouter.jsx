@@ -11,6 +11,9 @@ import Dashboard from './pages/Educator/Dashboard'
 import { useSelector } from 'react-redux'
 import Courses from './pages/Educator/Courses'
 import CreateCourse from './pages/Educator/CreateCourse'
+import EditCourse from './pages/Educator/EditCourse'
+import CoursePage from './pages/CoursePage'
+import AllCourses from './pages/AllCourses'
 
 function AppRouter() {
         const { userDetail } = useSelector(state => state.user)
@@ -47,14 +50,17 @@ function AppRouter() {
 
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/signup' element={<SignUp />} />
-                <Route path='/login' element={<Login />} />
-                <Route path="/forgotpassword" element={<ForgotPassword />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/editprofile" element={<EditProfile />} />
+                <Route path='/signup' element={!userDetail?<SignUp />:<Navigate to={"/"}/>} />
+                <Route path='/login' element={!userDetail?<Login />:<Navigate to={"/"}/>} />
+                <Route path="/forgotpassword" element={userDetail?<ForgotPassword />:<Navigate to={"/signup"}/>} />
+                <Route path="/profile" element={userDetail?<Profile />:<Navigate to={"/signup"}/>} />
+                <Route path="/editprofile" element={userDetail?<EditProfile />:<Navigate to={"/signup"}/>} />
                 <Route path="/dashboard" element={userDetail?.role==="educator"?<Dashboard />:<Navigate to={"/signup"}/>} />
-                <Route path="/courses" element={userDetail?.role==="educator"?<Courses />:<Navigate to={"/signup"}/>} />
+                <Route path="/courses" element={userDetail?.role==="educator"?<Courses/>:<Navigate to={"/signup"}/>} />
                 <Route path="/createcourse" element={userDetail?.role==="educator"?<CreateCourse />:<Navigate to={"/signup"}/>} />
+                <Route path="/editcourse/:courseId" element={userDetail?.role==="educator"?<EditCourse />:<Navigate to={"/signup"}/>} />
+                <Route path='/coursepage/:courseId' element={<CoursePage/>} />
+                <Route path='/allcourse' element={<AllCourses/>} />
             </Routes>
         </BrowserRouter>
     )

@@ -100,7 +100,7 @@ function Navbar() {
 
 
                 {userDetail?.role === "educator" && <div onClick={()=>{navigate("/profile")}} className='text-white text-[18px]  px-[35px] py-[9px] bg-black border-2 border-white rounded-xl cursor-pointer font-light'>My Profile</div>}
-                {userDetail?.role === "educator" && <div className='text-white text-[18px]  px-[35px] py-[9px] bg-black border-2 border-white rounded-xl cursor-pointer font-light'>My Courses</div>}
+                {userDetail?.role === "educator" && <div onClick={()=>{navigate("/courses")}} className='text-white text-[18px]  px-[35px] py-[9px] bg-black border-2 border-white rounded-xl cursor-pointer font-light'>My Courses</div>}
                 {userDetail?.role === "educator" && <div className='text-white text-[18px]  px-[35px] py-[9px] bg-black border-2 border-white rounded-xl cursor-pointer font-light'>Dashboard</div>}
 
                 <span onClick={handleLogout} className='text-black text-[18px]  px-[55px] py-[9px] bg-white  rounded-xl cursor-pointer border-2 border-black font-light shadow-sm' >{userDetail ? loading ? <TailSpin
@@ -120,7 +120,7 @@ function Navbar() {
             {/* profile open */}
             {show && <div className='absolute top-[110%] right-[15%] flex flex-col items-center justify-center gap-2 text-[16px] rounded-md bg-white px-[15px] py-[10px] border-[2px] border-black hover:border-white hover:text-white cursor-pointer hover:bg-black' >
                 <span onClick={() => { navigate("/profile") }} className='bg-black text-white px-[30px] py-[10px] rounded-full hover:bg-gray-600'>My Profile</span>
-                <span className='bg-black text-white px-[30px] py-[10px] rounded-full hover:bg-gray-600'>My Courses</span>
+                <span onClick={()=>navigate("/courses")} className='bg-black text-white px-[30px] py-[10px] rounded-full hover:bg-gray-600'>My Courses</span>
             </div>
             }
         </div>
