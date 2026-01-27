@@ -49,9 +49,15 @@ function AllCourses() {
         <div className='flex min-h-screen bg-gray-50'>
             <Navbar />
 
+            <button className='fixed top-18 left-4 z-[100] bg-white text-black px-3 py-1 rounded-full md:hidden border-2 border-black ' onClick={()=>{setSlide(prev=>!prev)}}>
+                {slide ?"Hide":"Show"} Filters
+            </button>
+
             {/* sidebar */}
-            <aside className='w-[260px] h-screen overflow-y-auto bg-black fixed top-0 left-0 p-6 py-[130px] border-r border-gray-200 shadow-md transition-transform duration-300 z-50 '>
-                <h2 className='text-xl font-bold flex items-center justify-center gap-2 text-gray-50 mb-6'><MdArrowBack className="text-white" onClick={() => navigate("/")} />Filter By Category</h2>
+            <aside className={`w-[260px] h-screen overflow-y-auto bg-gray-900 fixed top-0 left-0 p-6 py-[130px] border-r border-gray-200 shadow-md transition-transform duration-300 z-50 ${slide ? "translate-x-0":"-translate-x-full"}
+             md:translate-x-0`}>
+                <h2 className='text-xl font-bold flex items-center justify-center gap-2 text-gray-50 mb-6'>
+                    <MdArrowBack className="text-white" onClick={() => navigate("/")} />Filter By Category</h2>
                 <form onSubmit={(e) => { e.preventDefault() }} className='space-y-4 text-sm bg-gray-600 border-white text-white border p-[20px] rounded-2xl'>
                     <button className='px-[10px] py-[10px] bg-black text-white rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer'>Search With AI <img className='h-6 w-6 object-cover rounded-full ' src={ai} alt="" /></button>
 
@@ -86,7 +92,7 @@ function AllCourses() {
                 </form>
             </aside>
 
-            <main className='w-full flex-1 transition-all duration-300 py-[130px] md:pl-[300px] flex items-start justify-center md:justify-between flex-wrap gap-6 px-[10px]'>
+            <main className='w-full flex-1 transition-all duration-300 py-[130px] md:pl-[300px] flex items-start justify-center md:justify-center flex-wrap gap-6 px-[10px]'>
                 {filteredCourses?.length>0 ? filteredCourses?.map((course, index) => {
                     return (
                         <Card key={index} title={course?.title} category={course?.category} price={course?.price} thumbnail={course?.thumbnail} id={course?._id} />
