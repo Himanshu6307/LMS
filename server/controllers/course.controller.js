@@ -26,7 +26,7 @@ export const createCourse = async (req, res, next) => {
 
 export const getPublicCourse = async (req, res, next) => {
     try {
-        const courses = await courseModel.find({ isPublic: true }).populate("creator",);
+        const courses = await courseModel.find({ isPublic: true }).populate("creator").populate("lectures");
         if (!courses) {
             return next(new ErrorHandler("No public courses found", 404));
         };
@@ -42,7 +42,7 @@ export const getPublicCourse = async (req, res, next) => {
 export const getCreatedCourse = async (req, res, next) => {
     try {
         const userId = req.user;
-        const courses = await courseModel.find({ creator: userId }).populate("creator",);
+        const courses = await courseModel.find({ creator: userId }).populate("creator").populate("lectures");
         if (!courses) {
             return next(new ErrorHandler("No courses found", 404));
         };
@@ -126,7 +126,7 @@ export const deleteCourse = async (req, res, next) => {
 export const getCourseById = async (req, res, next) => {
     try {
         const { courseId } = req.params;
-        const course = await courseModel.findById(courseId).populate("creator");
+        const course = await courseModel.findById(courseId).populate("creator").populate("lectures");
         if (!course) {
             return next(new ErrorHandler("Course not found", 404));
         }
