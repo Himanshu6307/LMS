@@ -7,14 +7,13 @@ const lectureSchema=new mongoose.Schema({
     },
     videoUrl:{
         type:String,
-        required:[true,"Please provide lecture video URL"]
     },
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         
     },
-    
+
     isPreviewFree:{
         type:Boolean,
         default:false
