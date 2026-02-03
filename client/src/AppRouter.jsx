@@ -63,7 +63,7 @@ function AppRouter() {
                 <Route path="/createcourse" element={userDetail?.role==="educator"?<CreateCourse />:<Navigate to={"/signup"}/>} />
                 <Route path="/editcourse/:courseId" element={userDetail?.role==="educator"?<EditCourse />:<Navigate to={"/signup"}/>} />
                 <Route path="/createlecture/:courseId" element={userDetail?.role==="educator"?<CreateLecture />:<Navigate to={"/signup"}/>} />
-                <Route path="/editlecture/:lectureId/:courseId" element={userDetail?.role==="educator"?<EditLecture />:<Navigate to={"/signup"}/>} />
+                <Route path="/editlecture/:lectureId/:courseId" element={userDetail?.role==="educator"?<EditLecture />:<Navigate to={"/signup"}/>}/>
                 <Route path='/coursepage/:courseId' element={<CoursePage/>} />
                 <Route path='/allcourse' element={<AllCourses/>} />
                 <Route path='/profilephoto' element={<ProfilePhoto/>} />

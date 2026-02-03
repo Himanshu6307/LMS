@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import { ServerUrl } from '../../App';
 import { TailSpin } from 'react-loader-spinner';
+import { setCourseDetail } from '../../Store/Slices/course.slice';
 
 function EditLecture() {
     const navigate = useNavigate();
     const { lectureDetail, loading } = useSelector((state) => state.lecture);
+    const { courseDetail } = useSelector((state) => state.course);
     const { courseId, lectureId } = useParams();
     const [isPreviewFree, setIsPreviewFree] = useState(lectureDetail.find(l => l?._id == lectureId)?.isPreviewFree)
     const [lectureTitle, setLectureTitle] = useState(lectureDetail.find(l => l?._id == lectureId)?.lectureTitle);
@@ -30,8 +32,10 @@ function EditLecture() {
         formData.append("isPreviewFree", isPreviewFree);
         try {
             const response = await axios.post(`${ServerUrl}/lecture/editlecture/${courseId}/${lectureId}`, formData, { withCredentials: true });
-            console.log(response.data);
+            console.log(response.data);            
             setLoading1(false);
+            const updatedCourses=courseDetail.map(c=>c?._id==response.data?.course?._id?response.data.course:c);
+            dispatch(setCourseDetail(updatedCourses));
             navigate(`/createlecture/${courseId}`)
             toast.success("Lecture Edited Successfully");
         } catch (error) {
@@ -44,6 +48,8 @@ function EditLecture() {
         try {
             const response = await axios.get(`${ServerUrl}/lecture/deletelecture/${courseId}/${lectureId}`,{ withCredentials: true });
             console.log(response.data);
+            const updatedCourses=courseDetail.map(c=>c?._id==response.data?.course?._id?response.data.course:c);
+            dispatch(setCourseDetail(updatedCourses));
             navigate(`/createlecture/${courseId}`)
             toast.success("Lecture deleted Successfully");
         } catch (error) {
