@@ -13,13 +13,13 @@ function EditCourse() {
   const { courseDetail } = useSelector((state) => state.course);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isPublished, setIsPublished] = useState(false);
+  const [isPublished, setIsPublished] = useState(courseDetail?.find(course => course?._id === courseId)?.isPublished || false);
   const [title, setTitle] = useState(courseDetail?.find(course => course?._id === courseId)?.title || "");
-  const [subTitle, setSubTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [subTitle, setSubTitle] = useState(courseDetail?.find(course => course?._id === courseId)?.subTitle || "");
+  const [description, setDescription] = useState(courseDetail?.find(course => course?._id === courseId)?.description || "");
   const [category, setCategory] = useState(courseDetail?.find(course => course?._id === courseId)?.category || "");
-  const [level, setLevel] = useState("");
-  const [price, setPrice] = useState("");
+  const [level, setLevel] = useState(courseDetail?.find(course => course?._id === courseId)?.level || "");
+  const [price, setPrice] = useState(courseDetail?.find(course => course?._id === courseId)?.price || "");
   const [thumbnail, setThumbnail] = useState("");
   const [loading, setLoading] = useState(false);
   const [loading2,setLoading2] = useState(false);
@@ -98,7 +98,7 @@ function EditCourse() {
           Add detail Information regarding the Course.
         </h2>
         <div className='space-x-2 space-y-2'>
-          <button className='text-white px-4 py-2 bg-black'>Go to Lecture Page</button>
+          <button onClick={()=>navigate(`/createlecture/${courseId}`)} className='text-white px-4 py-2 bg-black rounded-md'>Go to Lecture Page</button>
         </div>
 
       </div>

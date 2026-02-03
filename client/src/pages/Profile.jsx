@@ -18,7 +18,7 @@ function Profile() {
                         <MdArrowBack size={30} onClick={()=>{navigate("/")}} />
                     </div>
 
-                    {userDetail?.photoUrl ? <img src={userDetail?.photoUrl} alt="" className='w-24 h-24 rounded-full object-cover border-4 border-black ' /> : <div className='w-24 h-24 rounded-full object-cover border-4 border-white text-red-700 text-5xl font-bold bg-black flex items-center justify-center '>{userDetail?.name.slice(0, 1).toUpperCase()}</div>}
+                    {userDetail?.photoUrl ? <img onClick={()=>{navigate("/profilephoto")}} src={userDetail?.photoUrl} alt="" className='w-24 h-24 rounded-full object-cover border-4 border-black ' /> : <div className='w-24 h-24 rounded-full object-cover border-4 border-white text-red-700 text-5xl font-bold bg-black flex items-center justify-center '>{userDetail?.name.slice(0, 1).toUpperCase()}</div>}
 
                     <h2 className='text-2xl font-bold mt-4 text-gray-800 '>{userDetail?.name}</h2>
                     <p className='text-xl text-gray-500'>{userDetail?.role}</p>

@@ -14,6 +14,9 @@ import CreateCourse from './pages/Educator/CreateCourse'
 import EditCourse from './pages/Educator/EditCourse'
 import CoursePage from './pages/CoursePage'
 import AllCourses from './pages/AllCourses'
+import CreateLecture from './pages/Educator/CreateLecture'
+import EditLecture from './pages/Educator/EditLecture'
+import ProfilePhoto from './pages/ProfilePhoto'
 
 function AppRouter() {
         const { userDetail } = useSelector(state => state.user)
@@ -59,8 +62,11 @@ function AppRouter() {
                 <Route path="/courses" element={userDetail?.role==="educator"?<Courses/>:<Navigate to={"/signup"}/>} />
                 <Route path="/createcourse" element={userDetail?.role==="educator"?<CreateCourse />:<Navigate to={"/signup"}/>} />
                 <Route path="/editcourse/:courseId" element={userDetail?.role==="educator"?<EditCourse />:<Navigate to={"/signup"}/>} />
+                <Route path="/createlecture/:courseId" element={userDetail?.role==="educator"?<CreateLecture />:<Navigate to={"/signup"}/>} />
+                <Route path="/editlecture/:lectureId/:courseId" element={userDetail?.role==="educator"?<EditLecture />:<Navigate to={"/signup"}/>} />
                 <Route path='/coursepage/:courseId' element={<CoursePage/>} />
                 <Route path='/allcourse' element={<AllCourses/>} />
+                <Route path='/profilephoto' element={<ProfilePhoto/>} />
             </Routes>
         </BrowserRouter>
     )

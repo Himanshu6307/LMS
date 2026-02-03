@@ -66,8 +66,7 @@ export const getLectureById = async (req, res, next) => {
 
 export const deleteLecture = async (req, res, next) => {
     try {
-        const { lectureId } = req.params;
-        const { courseId } = req.params;
+        const { lectureId,courseId } = req.params;
 
         if (!lectureId || !courseId) {
             return next(new ErrorHandler("Lecture ID and Course ID is required", 400));
@@ -150,7 +149,7 @@ export const editLecture = async (req, res, next) => {
         if (!course) {
             return next(new ErrorHandler("Course not found", 404));
         }
-        course.lectures.push(lecture._id);
+        // course.lectures.push(lecture._id);
         await course.populate("lectures");
         await course.populate("creator");
         await course.save();
