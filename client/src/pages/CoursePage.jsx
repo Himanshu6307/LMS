@@ -8,6 +8,7 @@ import emptyimg from "../assets/empty.jpg"
 import { FaStar } from 'react-icons/fa';
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
 import { IoLockClosed } from "react-icons/io5";
+import Card from '../components/Card';
 
 function CoursePage() {
     const navigate = useNavigate();
@@ -16,13 +17,32 @@ function CoursePage() {
     const [loading, setLoading] = useState(false);
     const [currentCourse, setCurrentCourse] = useState(null);
     const [currentLecture, setCurrentLecture] = useState(null)
+    const [creator, setCreator] = useState(null)
+    const [creatorCourse, setCreatorCourse] = useState([])
+
+
+    const fetchCreator = () => {
+        const course = courseDetail.find(c => c?._id === courseId);
+        if (!course) return;
+
+        setCreator(course.creator);
+
+        const creatorCourses = courseDetail.filter(
+            c =>
+                c?.creator?._id === course?.creator?._id &&
+                c?._id !== courseId
+        );
+
+        setCreatorCourse(creatorCourses);
+    };
+
 
     useEffect(() => {
+        fetchCreator();
         (async () => {
             setLoading(true)
             try {
                 const response = await axios.get(`${ServerUrl}/course/getcoursebyid/${courseId}`, { withCredentials: true });
-                console.log(response.data);
                 setCurrentCourse(response.data);
                 setLoading(false);
 
@@ -32,17 +52,32 @@ function CoursePage() {
             }
 
         })()
-    }, [courseDetail])
+    }, [courseDetail, courseId])
+
+
+    useEffect(() => {
+        setCurrentLecture(null);
+        setCurrentCourse(null);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+
+    }, [courseId]);
+
+
+
 
     return (
         <div className=' min-h-screen bg-gray-100 p-6'>
-            <div className='max-w-6xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 relative '>
+            <div className='max-w-8xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 relative '>
                 {/* top */}
                 <div className='flex flex-col md:flex-row gap-6'>
                     {/* thumbnail */}
                     <div className='w-full md:w-1/2'>
                         <MdArrowBack size={30} onClick={() => { navigate("/") }} />
-                        {currentCourse?.thumbnail ? <img src={currentCourse?.thumbnail} className='h-[40vh] rounded-xl object-cover w-full' alt="Not available" /> : <img src={emptyimg} className='rounded-xl w-full object-cover' alt="Not available" />}
+                        {currentCourse?.thumbnail ? <img src={currentCourse?.thumbnail} className='h-[45vh] border-1 border-gray-500 rounded-md object-cover w-full' alt="Not available" /> : <img src={emptyimg} className='rounded-xl w-full object-cover' alt="Not available" />}
 
                     </div>
                     {/* courseDetail */}
@@ -92,20 +127,64 @@ function CoursePage() {
                         <p className='text-gray-700 mb-4 text-sm '>{currentCourse?.lectures?.length} Lectures</p>
                         <div className='flex flex-col gap-3'>
                             {currentCourse?.lectures?.map((lecture, index) => {
-                                return (<button disabled={lecture?.isPreviewFree} onClick={
+                                return (<button disabled={!(lecture?.isPreviewFree)} onClick={
                                     () => {
-                                        if (lecture?.isPreviewFree){ setCurrentLecture(lecture?.videoUrl)}
+                                        if (lecture?.isPreviewFree) { setCurrentLecture(lecture) }
                                     }}
-                                    key={index} className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-200 text-left ${lecture?.isPreviewFree?"hover:bg-gray-100 cursor-pointer border-gray-300 ":"cursor-not-allowed opacity-60 border-gray-200"} ${currentLecture?.lectureTitle === lecture?.lectureTitle?"bg-gray-100 border-gray-400":""}`}>
+                                    key={index} className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-200 text-left ${lecture?.isPreviewFree ? "hover:bg-gray-100 cursor-pointer border-gray-300 " : "cursor-not-allowed opacity-60 border-gray-200"} ${currentLecture?.lectureTitle === lecture?.lectureTitle ? "bg-gray-100 border-gray-400" : ""}`}>
                                     <span className='text-lg text-gray-700'>
-                                        {lecture?.isPreviewFree?<MdOutlinePlayCircleFilled />:<IoLockClosed />}
+                                        {lecture?.isPreviewFree ? <MdOutlinePlayCircleFilled /> : <IoLockClosed />}
                                     </span>
                                     <span className='text-sm font-medium'>Lecture-{index + 1} : {lecture?.lectureTitle}</span>
-                                    
+
                                 </button>)
                             })}
                         </div>
                     </div>
+
+                    <div className='bg-white w-full md:w-3/5 p-6 rounded-2xl shadow-lg border border-gray-200'>
+                        <div className='aspect-video w-full rounded-lg overflow-hidden mb-4 bg-black flex items-center justify-center'>
+                            {currentLecture?.videoUrl ? <video controls src={currentLecture?.videoUrl} className='w-full h-full object-cover' /> : <span className='text-white text-sm'>Select a preview Lecture to watch</span>}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className='mt-8 border-t pt-6'>
+                    <h2 className='text-xl font-semibold mb-2'>Write Reviews</h2>
+                    <div className='mb-4'>
+                        <div className='flex gap-1 mb-2'>
+                            {[1, 2, 3, 4, 5].map((e, index) => {
+                                return (<FaStar key={e} className='fill-amber-300' />)
+                            })}
+                        </div>
+                    </div>
+                    <textarea rows={3} className='w-full border border-gray-300 rounded-lg p-2' placeholder='Write Your Reviews...'>
+
+                    </textarea>
+                    <button className='bg-black py-3 px-4 rounded-md hover:bg-gray-800 text-white mt-3 '>Submit Review</button>
+                </div>
+
+                {/* for creator Information */}
+
+                <div className='flex items-center gap-4 pt-4 border-t'>
+                    {creator?.photoUrl ? <img className='w-16 h-16 rounded-full object-cover border-1 border-black' src={creator?.photoUrl} alt="" /> : <img className='w-16 h-16 rounded-full object-cover border-1 border-black' src={emptyimg} alt="" />}
+                    <div>
+                        <h2 className='text-xl font-semibold'>{creator?.name}</h2>
+                        <p className='md:text-sm text-gray-600 text-[10px]'>{creator?.description}</p>
+                        <p className='md:text-sm text-gray-600 text-[10px]'>{creator?.email}</p>
+                    </div>
+                </div>
+
+                {/* publish course */}
+                <div>
+                    <p>Published Course By the Educator</p>
+                </div>
+
+                <div className='w-full transition-all duration-300 py-[20px] flex items-start justify-center lg:justify-start flex-wrap gap-6 lg:px-[80px]'>
+                    {creatorCourse.length != 0 ? creatorCourse?.map((course, index) => {
+                        return (<Card key={index} title={course?.title} category={course?.category} price={course?.price} thumbnail={course?.thumbnail} id={course?._id} />)
+                    }) : <div>No Other courses Published</div>}
                 </div>
             </div>
 
